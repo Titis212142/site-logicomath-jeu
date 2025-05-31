@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Classification - LogicoMath</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Choisis ton jeu ci-dessous :</h1>
+      <h2>🎯 Pareils ou différents</h2>
+    </header>
+
+    <section>
+      <div class="etoiles" id="liste-jeux">
+        <!-- Les jeux seront générés ici -->
+      </div>
+
+      <div style="margin-top: 40px">
+        <a href="{{ url_for('index') }}">← Retour à l'accueil</a>
+      </div>
+    </section>
+
+    <script>
+      const jeux = [
+        { id: 1, titre: "Couleur + Forme", url: "/jeu1" },
+        { id: 2, titre: "Couleur + Animaux", url: "/jeu2" },
+        { id: 3, titre: "Couleur + Motif (formes)", url: "/jeu3" },
+        { id: 4, titre: "Couleur + Motif (animaux)", url: "/jeu4" },
+        { id: 5, titre: "Couleur + Motif + Contour (formes)", url: "/jeu5" },
+        { id: 6, titre: "Couleur + Motif + Contour (animaux)", url: "/jeu6" },
+      ];
+
+      const eleves = JSON.parse(localStorage.getItem("eleves") || "[]");
+      const actif = parseInt(localStorage.getItem("eleveActif"));
+      const container = document.getElementById("liste-jeux");
+
+      if (!isNaN(actif) && eleves[actif]) {
+        const progression = eleves[actif].progression || {};
+
+        jeux.forEach((jeu) => {
+          for (let i = 0; i < 5; i++) {
+            const btn = document.createElement("a");
+            btn.className = "etoile";
+            btn.textContent = jeu.id;
+            btn.title = jeu.titre + " (exercice " + (i + 1) + ")";
+            btn.href = jeu.url;
+            if (progression["jeu" + jeu.id]) {
+              btn.classList.add("reussie");
+            }
+            container.appendChild(btn);
+          }
+        });
+      } else {
+        container.innerHTML = "<p>⚠️ Aucun élève sélectionné.</p>";
+      }
+    </script>
+  </body>
+</html>

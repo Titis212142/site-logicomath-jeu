@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>LogicoMath - Accueil</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <style>
+      /* Agrandir les images d'animaux sans agrandir le container */
+      .avatar {
+        width: 160px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+
+      .eleve {
+        width: 170px; /* Taille fixe du bloc élève */
+        overflow: hidden; /* Ne pas agrandir le container si l’image dépasse */
+        text-align: center;
+        margin: 10px;
+        display: inline-block;
+      }
+
+      .prenom {
+        margin-top: 8px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Bienvenue sur LogicoMath</h1>
+    </header>
+
+    <section id="eleves">
+      <h2>Choisis ton prénom</h2>
+      <div id="liste-eleves"></div>
+
+      <div id="actions-eleves">
+        <input type="text" id="nouvel-eleve" placeholder="Nom de l'élève" />
+        <button id="ajouter-eleve" disabled>+</button>
+        <button id="supprimer-eleve" disabled>−</button>
+      </div>
+
+      <button id="acces-maitresse">Maîtresse 🔒</button>
+      <button id="btn-deconnexion" style="display: none">Déconnexion</button>
+    </section>
+
+    <footer>
+      <p>© LogicoMath - Accueil</p>
+    </footer>
+
+    <script>
+      const animauxDispo = [
+        "chat_bleu_fonce.png",
+        "chat_jaune.png",
+        "chien_brun.png",
+        "chien_saumon.png",
+        "cochon_orange.png",
+        "cochon_rose.png",
+        "elephant_bleu.png",
+        "elephant_violet.png",
+        "escargot_vert_clair.png",
+        "escargot_violet.png",
+        "grenouille_gris.png",
+        "grenouille_vert_fonce.png",
+        "herisson_brun.png",
+        "herisson_saumon.png",
+        "lapin_orange.png",
+        "lapin_rose.png",
+        "papillon_bleu_fonce.png",
+        "papillon_jaune.png",
+        "pingouin_gris.png",
+        "pingouin_vert_fonce.png",
+        "poisson_bleu.png",
+        "poisson_violet.png",
+        "souris_vert_clair.png",
+        "souris_violet.png",
+      ];
+
+      let eleves = JSON.parse(localStorage.getItem("eleves") || "[]");
+      let modeMaitresse = false;
+
+      const container = document.getElementById("liste-eleves");
+      const btnAjouter = document.getElementById("ajouter-eleve");
+      const btnSupprimer = document.getElementById("supprimer-eleve");
+      const inputNom = document.getElementById("nouvel-eleve");
+      const btnConnexion = document.getElementById("acces-maitresse");
+      const btnDeconnexion = document.getElementById("btn-deconnexion");
+
+      function getAnimalPourEleve(nom) {
+        const cle = "animal_" + nom;
+        let animal = localStorage.getItem(cle);
+        if (!animal) {
+          const index = Math.floor(Math.random() * animauxDispo.length);
+          animal = animauxDispo[index];
+          localStorage.setItem(cle, animal);
+        }
+        return animal;
+      }
+
+      function afficherEleves() {
+        container.innerHTML = "";
+        eleves.forEach((e, i) => {
+          const div = document.createElement("div");
+          div.className = "eleve";
+
+          const img = document.createElement("img");
+          img.className = "avatar";
+          img.src = "/static/images/pre_animaux/" + getAnimalPourEleve(e.name);
+          img.alt = "Animal";
+
+          const nom = document.createElement("div");
+          nom.className = "prenom";
+          nom.textContent = e.name;
+
+          div.appendChild(img);
+          div.appendChild(nom);
+
+          div.onclick = () => {
+            localStorage.setItem("eleveActif", i);
+            window.location.href = "/categories"; // Redirige vers la page des jeux
+          };
+
+          container.appendChild(div);
+        });
+      }
+
+      btnAjouter.onclick = () => {
+        const nom = inputNom.value.trim();
+        if (!nom) return alert("Entrez un prénom !");
+        eleves.push({ name: nom, progression: {} });
+        localStorage.setItem("eleves", JSON.stringify(eleves));
+        afficherEleves();
+        inputNom.value = "";
+      };
+
+      btnSupprimer.onclick = () => {
+        if (eleves.length > 0) eleves.pop();
+        localStorage.setItem("eleves", JSON.stringify(eleves));
+        afficherEleves();
+      };
+
+      btnConnexion.onclick = () => {
+        const pass = prompt("Mot de passe maîtresse :");
+        if (pass === "1234") {
+          alert("Mode maîtresse activé !");
+          modeMaitresse = true;
+          btnAjouter.disabled = false;
+          btnSupprimer.disabled = false;
+          btnDeconnexion.style.display = "inline-block";
+        } else {
+          alert("Mot de passe incorrect.");
+        }
+      };
+
+      btnDeconnexion.onclick = () => {
+        alert("Déconnectée.");
+        modeMaitresse = false;
+        btnAjouter.disabled = true;
+        btnSupprimer.disabled = true;
+        btnDeconnexion.style.display = "none";
+      };
+
+      // Initialisation
+      btnAjouter.disabled = true;
+      btnSupprimer.disabled = true;
+      afficherEleves();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Jeu 1 - Couleur et Forme</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <style>
+      /* Réduction de la taille des boutons sans toucher aux images originales */
+      #choix img {
+        width: 420px; /* Ajuste cette valeur selon ton besoin */
+        height: auto;
+        cursor: pointer;
+        margin: 10px;
+        transition: transform 0.2s ease;
+      }
+
+      /* Effet de zoom au survol */
+      #choix img:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Jeu 1 : Pareils ou différents</h1>
+    <h2>différences de forme + couleur</h2>
+
+    <!-- 🔊 Bouton audio -->
+    <button id="btn-audio" title="Écouter la consigne">🔊</button>
+
+    <!-- 🎯 Barre de progression -->
+    <div id="progression-bar">
+      <div id="progression-bar-inner">0 / 5</div>
+    </div>
+
+    <!-- 🧩 Zone de jeu -->
+    <div id="jeu-container">
+      <div id="images-et-boutons">
+        <img id="img1" src="" alt="Image 1" />
+
+        <div id="choix">
+          <img
+            src="{{ url_for('static', filename='images/egal.png') }}"
+            id="btn-pareil"
+            alt="Pareil"
+            title="C'est pareil"
+          />
+          <img
+            src="{{ url_for('static', filename='images/pasegal.png') }}"
+            id="btn-different"
+            alt="Différent"
+            title="C'est différent"
+          />
+        </div>
+
+        <img id="img2" src="" alt="Image 2" />
+      </div>
+
+      <div id="message"></div>
+      <div id="bravo">⭐ Bravo ! ⭐</div>
+    </div>
+
+    <!-- 🔙 Retour -->
+    <div style="margin-top: 40px">
+      <a href="{{ url_for('index') }}">← Retour à l'accueil</a>
+    </div>
+
+    <!-- 📜 Script du jeu -->
+    <script src="{{ url_for('static', filename='js/jeu1.js') }}"></script>
+    <script>
+      document.getElementById("btn-audio").onclick = () => {
+        const audio = new Audio(
+          "{{ url_for('static', filename='audio/consigne_jeu1.mp3') }}"
+        );
+        audio.play();
+      };
+    </script>
+  </body>
+</html>

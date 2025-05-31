@@ -1,0 +1,242 @@
+/* ----------------------
+   🌈 Style général
+------------------------ */
+body {
+  font-family: 'Comic Sans MS', cursive;
+  background-color: #fff8dc;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  color: #333;
+}
+
+header {
+  background-color: #ffcc80;
+  padding: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 2.5em;
+  color: #ff6600;
+}
+
+h2 {
+  color: #4a90e2;
+  margin-top: 30px;
+}
+
+footer {
+  margin-top: 60px;
+  color: #999;
+  font-size: 0.9em;
+}
+
+/* ----------------------
+   🐾 Image d’animal aléatoire
+------------------------ */
+#animal-container {
+  margin-bottom: 25px;
+}
+
+#animal-container img {
+  width: 120px;
+  height: auto;
+  border-radius: 12px;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ----------------------
+   👧 Liste des élèves
+------------------------ */
+#liste-eleves {
+  margin-top: 20px;
+}
+
+.eleve {
+  display: inline-block;
+  background-color: #c5e1a5;
+  padding: 12px;
+  margin: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: transform 0.2s ease;
+  text-align: center;
+  width: 130px;
+}
+
+.eleve:hover {
+  background-color: #aed581;
+  transform: scale(1.05);
+}
+
+.avatar {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background-color: #fff;
+  padding: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.prenom {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* ----------------------
+   ✍️ Ajout / suppression élève
+------------------------ */
+#actions-eleves {
+  margin-top: 15px;
+}
+
+input#nouvel-eleve {
+  padding: 8px 10px;
+  font-size: 1em;
+  border-radius: 8px;
+  border: 1px solid #aaa;
+  margin-right: 10px;
+}
+
+button {
+  font-size: 1.1em;
+  padding: 8px 14px;
+  margin: 5px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #ffab91;
+  color: #000;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #ff7043;
+  color: white;
+}
+
+#btn-deconnexion {
+  background-color: #90caf9;
+  margin-left: 10px;
+}
+
+#btn-deconnexion:hover {
+  background-color: #42a5f5;
+  color: white;
+}
+
+/* ----------------------
+   ⭐ Étoiles de progression
+------------------------ */
+.etoiles {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.etoile {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background-color: #ccc;
+  border-radius: 50%;
+  display: inline-block;
+  font-weight: bold;
+  text-decoration: none;
+  color: #000;
+  transition: background-color 0.3s ease;
+}
+
+.etoile:hover {
+  background-color: #ffeb3b;
+}
+
+.etoile.reussie {
+  background-color: #81c784 !important;
+  color: white;
+}
+
+/* ----------------------
+   🎮 Style du jeu (images + boutons entre)
+------------------------ */
+#images-et-boutons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+#images-et-boutons img {
+  width: 450px;
+  height: auto;
+  border: 5px solid #ccc;
+  border-radius: 15px;
+  background-color: white;
+  padding: 10px;
+}
+
+#choix {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+#choix img {
+  width: 400px;
+  margin: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+#choix img:hover {
+  transform: scale(1.1);
+}
+
+#bravo {
+  font-size: 2em;
+  color: #4caf50;
+  margin-top: 20px;
+  display: none;
+  animation: pulse 1s infinite;
+}
+
+#message {
+  font-size: 1.2em;
+  color: #d32f2f;
+  margin-top: 15px;
+}
+
+#progression-bar {
+  margin: 20px auto;
+  width: 80%;
+  height: 30px;
+  background-color: #eee;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+#progression-bar-inner {
+  height: 100%;
+  background-color: #81c784;
+  width: 0%;
+  line-height: 30px;
+  color: white;
+  font-weight: bold;
+  transition: width 0.3s ease;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
